@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy-dark: #1b365d;
+  --gold-accent: #c5a059;
+  --gold-bright: #d4af37;
+  --bg-white: #ffffff;
+}
+
+body {
+  color: #1b365d;
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+/* Moldura Dupla Dourada Inspirada no Convite Oficial */
+.gold-card-border {
+  border: 1.5px solid #d4af37;
+  box-shadow: 0 0 0 3px #ffffff, 0 0 0 4.5px rgba(212, 175, 55, 0.5);
+}
+
+/* Scrollbar elegante */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb {
+  background: #c5a059;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1b365d;
+}
+
+/* Seleção de texto refinada */
+::selection {
+  background-color: #e5ecf5;
+  color: #1b365d;
+}
