@@ -1,5 +1,6 @@
-import { redirect } from 'next/navigation';
-import { MAPA_FLORES } from '@/lib/flores';
+import { MAPA_FLORES, obterConfigFlor } from '@/lib/flores';
+import FormularioConfirmacao from '@/components/FormularioConfirmacao';
+import { notFound } from 'next/navigation';
 
 interface FlorPageProps {
   params: {
@@ -14,6 +15,11 @@ export function generateStaticParams() {
 }
 
 export default function FlorPage({ params }: FlorPageProps) {
-  // Redireciona a antiga rota /[flor] para a nova rota padrão /confirmacao?convite=[flor]
-  redirect(`/confirmacao?convite=${params.flor}`);
+  const florConfig = obterConfigFlor(params.flor);
+  
+  if (!florConfig) {
+    notFound();
+  }
+
+  return <FormularioConfirmacao flor={florConfig} />;
 }

@@ -1,25 +1,27 @@
 'use client';
 
-import React, { Suspense, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { obterConfigFlor, MAPA_FLORES } from '@/lib/flores';
+import { obterConfigFlor, MAPA_FLORES, FlorConfig } from '@/lib/flores';
 import FormularioConfirmacao from '@/components/FormularioConfirmacao';
 
 function ConfirmacaoContent() {
   const searchParams = useSearchParams();
-  
-  const paramConvite = searchParams.get('convite') || searchParams.get('flor') || searchParams.get('c') || 'margarida';
-  
-  let florConfig = obterConfigFlor(paramConvite);
-  
-  if (!florConfig) {
-    if (paramConvite === '1') florConfig = MAPA_FLORES.margarida;
-    else if (paramConvite === '2') florConfig = MAPA_FLORES.orquidea;
-    else if (paramConvite === '3') florConfig = MAPA_FLORES.tulipa;
-    else if (paramConvite === '4') florConfig = MAPA_FLORES.lirio;
-    else if (paramConvite === '5') florConfig = MAPA_FLORES.girassol;
-    else florConfig = MAPA_FLORES.margarida;
-  }
+
+  // Preserva a configuração da flor capturada na montagem inicial sem resetar ao mascarar a URL
+  const [florConfig] = useState<FlorConfig>(() => {
+    const paramConvite = searchParams.get('convite') || searchParams.get('flor') || searchParams.get('c') || 'margarida';
+    let config = obterConfigFlor(paramConvite);
+    if (!config) {
+      if (paramConvite === '1') config = MAPA_FLORES.margarida;
+      else if (paramConvite === '2') config = MAPA_FLORES.orquidea;
+      else if (paramConvite === '3') config = MAPA_FLORES.tulipa;
+      else if (paramConvite === '4') config = MAPA_FLORES.lirio;
+      else if (paramConvite === '5') config = MAPA_FLORES.girassol;
+      else config = MAPA_FLORES.margarida;
+    }
+    return config;
+  });
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
