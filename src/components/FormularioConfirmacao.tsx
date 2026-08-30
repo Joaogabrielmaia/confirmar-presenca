@@ -371,16 +371,13 @@ export default function FormularioConfirmacao({ flor }: FormularioConfirmacaoPro
         </div>
       </div>
 
-      <div className="text-center mb-5">
-        <span className="inline-block px-3 py-1 bg-[#f7f3e8] border border-[#d4af37] text-[#755416] rounded-full text-xs font-bold mb-0.5">
-          Convite {flor.nome} • Até {flor.limiteMaximo} pessoa(s)
-        </span>
-        {flor.limiteMaximo > 1 && (
-          <p className="text-[11px] sm:text-xs text-[#1b365d]/70 mt-0.5 font-sans">
+      {flor.limiteMaximo > 1 && (
+        <div className="text-center mb-5">
+          <p className="text-[11px] sm:text-xs text-[#1b365d]/70 font-sans">
             Se for levar menos pessoas, preencha somente quem irá com você.
           </p>
-        )}
-      </div>
+        </div>
+      )}
 
       {tempoRestante && (
         <div className="mb-5 p-3 bg-[#f7f3e8]/90 border border-[#e7d28d] rounded-2xl text-center shadow-2xs">
