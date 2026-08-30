@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { obterConfigFlor, MAPA_FLORES } from '@/lib/flores';
 import FormularioConfirmacao from '@/components/FormularioConfirmacao';
@@ -8,10 +8,8 @@ import FormularioConfirmacao from '@/components/FormularioConfirmacao';
 function ConfirmacaoContent() {
   const searchParams = useSearchParams();
   
-  // Suporta ?convite=orquidea, ?flor=orquidea, ou ?c=2
   const paramConvite = searchParams.get('convite') || searchParams.get('flor') || searchParams.get('c') || 'margarida';
   
-  // Mapeamento numérico simples se passarem ?c=1, ?c=2 etc.
   let florConfig = obterConfigFlor(paramConvite);
   
   if (!florConfig) {
@@ -22,6 +20,12 @@ function ConfirmacaoContent() {
     else if (paramConvite === '5') florConfig = MAPA_FLORES.girassol;
     else florConfig = MAPA_FLORES.margarida;
   }
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.history.replaceState(null, '', '/confirmacao');
+    }
+  }, []);
 
   return <FormularioConfirmacao flor={florConfig} />;
 }
