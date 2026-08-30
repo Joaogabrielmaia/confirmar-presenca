@@ -6,7 +6,6 @@ import { MAPA_FLORES } from '@/lib/flores';
 import { OrnamentoDivisorDourado } from '@/components/ArranjoFloral';
 import { Flower2, ExternalLink, ShieldCheck, Lock, KeyRound, LogOut } from 'lucide-react';
 
-// Hash SHA-256 seguro da senha "8257"
 const HASH_SENHA_ADMIN = '2f3b1a647736218c52cd637eebd7b2ce8ff6bd74592c8330a9ba44d09e87bfa9';
 
 async function gerarSha256(texto: string): Promise<string> {
@@ -58,7 +57,6 @@ export default function HomePage() {
 
   const flores = Object.values(MAPA_FLORES);
 
-  // 1. TELA DE LOGIN ADMIN PROTEGIDA POR HASH SHA-256
   if (!autenticado) {
     return (
       <div className="bg-[#fdfbf7] rounded-3xl p-6 sm:p-10 shadow-2xl border-2 border-[#d4af37] max-w-md w-full text-center relative z-20 my-6">
@@ -102,7 +100,6 @@ export default function HomePage() {
     );
   }
 
-  // 2. PAINEL ADMIN COM OS LINKS DA ROTA /confirmacao
   return (
     <div className="bg-[#fdfbf7] rounded-3xl p-6 sm:p-10 shadow-2xl border-2 border-[#d4af37] max-w-2xl w-full text-center relative z-20 my-6">
       <button
@@ -114,7 +111,6 @@ export default function HomePage() {
         Sair
       </button>
 
-      {/* Título do Aniversário */}
       <h1 className="text-5xl sm:text-6xl font-script text-[#1b365d] mb-1 pt-4">
         Nádia
       </h1>
@@ -130,13 +126,12 @@ export default function HomePage() {
       <OrnamentoDivisorDourado />
 
       <p className="text-[#1b365d]/80 text-sm font-sans max-w-lg mx-auto mb-6">
-        Selecione abaixo um dos links de confirmação para copiar ou testar a página correspondente a cada família:
+        Selecione abaixo um dos links de confirmação para copiar ou enviar aos convidados via WhatsApp:
       </p>
 
-      {/* Grid com os Links da Rota /confirmacao */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-6 font-sans">
         {flores.map((flor) => {
-          const urlConfirmacao = `/confirmacao?convite=${flor.slug}`;
+          const urlConfirmacao = `/confirmacao/${flor.slug}`;
           return (
             <Link
               key={flor.slug}
@@ -160,12 +155,11 @@ export default function HomePage() {
         })}
       </div>
 
-      {/* Rodapé Informativo */}
       <div className="bg-[#f4f7fb]/80 rounded-2xl p-4 text-xs text-[#1b365d] border border-[#cbd8eb] flex items-start gap-3 text-left font-sans shadow-xs">
         <ShieldCheck size={22} className="text-[#c5a059] shrink-0 mt-0.5" />
         <div>
           <strong className="block text-[#1b365d] text-sm mb-0.5 font-bold">Como enviar aos convidados:</strong>
-          Copie o link desejado e envie via WhatsApp. Exemplo: para quem pode levar até 3 pessoas, envie a URL <code>seusite.com/confirmacao?convite=tulipa</code>.
+          Copie o link da flor desejada e envie no WhatsApp. Exemplo: para quem pode levar até 2 pessoas (Dupla), envie a URL <code>/confirmacao/orquidea</code>.
         </div>
       </div>
     </div>
