@@ -1,38 +1,61 @@
-# 🌸 Sistema de Confirmação de Presença & Gestão RSVP (Serverless & Static)
+# 🌸 EventoRSVP - Sistema de Confirmação de Presença
 
-Plataforma web de alta performance para gestão de confirmação de presença (RSVP) por categorias de convites familiares, desenvolvida com **Next.js 14**, **TypeScript**, **Tailwind CSS** e banco de dados **Google Sheets** via API Serverless Proxy.
-
----
-
-## 🛠️ Tech Stack & Arquitetura
-
-- **Frontend & UI:** Next.js 14 (App Router), React 18, TypeScript, Tailwind CSS
-- **Design System & Typography:** Google Fonts (Serif, Script, Sans-Serif), Lucide Icons
-- **Backend & Database:** Google Apps Script Web App (Serverless API Proxy), Google Sheets
-- **Segurança & Criptografia:** Web Crypto API (SHA-256 Hashing), Sanitização XSS & Defesa contra Formula Injection (CWE-1236)
-- **Geolocalização:** Google Maps Embed API, Google Maps Navigation & Waze Deep Linking
+Plataforma web de confirmação de presença (RSVP) desenvolvida em Next.js com React, TypeScript e TailwindCSS, integrada ao Google Sheets e à API do Google Maps. O sistema permite a gestão individualizada de convites por categorias de flores, limites de acompanhantes por família, cronômetro de prazo limite e navegação para o local da festa.
 
 ---
 
-## 🚀 Destaques Técnicos & Engenharia de Software
+## 🛠️ Tecnologias Utilizadas
 
-### 1. Compilação Estática Serverless (Static Export)
-- Configurado com `output: 'export'`, gerando um bundle 100% estático otimizado para CDNs de alta velocidade.
-- **First Load JS de apenas ~87 KB**, garantindo pontuação máxima de performance no Google Lighthouse e carregamento instantâneo em redes móveis 3G/4G.
+- **Frontend**: Next.js (v14.2.35), React (v18), TypeScript, TailwindCSS
+- **Ícones & Design**: Lucide Icons, Google Fonts (`Playfair Display`, `Great Vibes`, `Montserrat`)
+- **Banco de Dados**: Google Sheets via Google Apps Script Web App (API Serverless)
+- **Geolocalização**: Google Maps Embed API, Google Maps Navigation & Waze Deep Linking
+- **Arquitetura**: Jamstack / Client-Side Static Export (`output: 'export'`)
 
-### 2. Segurança & Criptografia Client-Side (SHA-256)
-- Autenticação do painel administrativo protegida via digest criptográfico **SHA-256** (`crypto.subtle.digest`).
-- A senha em texto puro jamais é armazenada ou exposta no bundle JavaScript compilado, impedindo engenharia reversa via devtools.
+---
 
-### 3. Defesa contra Injeção de Fórmulas (CWE-1236) & XSS
-- Implementação de sanitização estrita de entradas (`sanitizarTexto`).
-- Entradas iniciadas por caracteres reservados de fórmulas (`=`, `+`, `-`, `@`) são automaticamente escapadas com prefixo de texto puro (`'`), prevenindo execução remota de código ou fórmulas maliciosas na planilha backend.
+## 🚀 Instalação & Execução Local
 
-### 4. Arquitetura Proxy "Write-Only" (Banco de Dados Cego)
-- O frontend interage com o banco de dados exclusivamente através de uma API proxy Serverless em canal de sentido único.
-- A estrutura de dados, o ID da planilha e o histórico de registros permanecem 100% inacessíveis para usuários externos, garantindo privacidade total.
+### Pré-requisitos
+- Node.js `v18.0.0` ou superior.
+- Git instalado.
 
-### 5. Engenharia de UX & Persistência Offline-First (`localStorage`)
-- **Controle Dinâmico de Limites:** Lógica condicional tátil que se adapta dinamicamente à quantidade máxima de acompanhantes permitida por convite.
-- **Persistência Tátil:** Salvamento do recibo de presença no `localStorage` para que o convidado possa reabrir o link a qualquer momento e consultar data, horário e traçar rotas via GPS (Google Maps / Waze).
-- **Controle de Fluxo & Trava de Prazos:** Cronômetro de contagem regressiva em tempo real com bloqueio de submissão pós-expiração e prevenção contra navegação acidental pelo botão voltar do navegador.
+### 1. Clonar o Repositório
+```bash
+git clone <URL_DO_REPOSITORIO>
+cd confirmar-presenca
+```
+
+### 2. Instalar Dependências
+```bash
+npm install
+```
+
+### 3. Executar o Projeto
+
+#### Modo de Desenvolvimento
+```bash
+npm run dev
+```
+
+#### Modo de Produção
+```bash
+npm run build
+```
+
+Acesse a aplicação em: `http://localhost:3000`
+
+---
+
+## 📌 Funcionalidades Principais
+
+- 🌺 **5 Opções de Convites por Flores**: Sistema flexível que adapta o formulário conforme o limite de pessoas definido para cada família:
+  - **Margarida**: Convite individual (1 pessoa)
+  - **Orquídea**: Convite para até 2 pessoas
+  - **Tulipa**: Convite para até 3 pessoas
+  - **Lírio**: Convite para até 4 pessoas
+  - **Girassol**: Convite para até 5 pessoas
+- ⏳ **Prazo Limite & Bloqueio Automático**: Cronômetro de contagem regressiva em tempo real com trava do formulário após a data limite configurada.
+- 🗄️ **Integração com Google Sheets**: Atendimento ao requisito da cliente para registrar as confirmações diretamente em uma planilha do Google Sheets de forma simples e acessível.
+- 🗺️ **Localização Interativa via Maps & Waze**: Tela pós-confirmação com mapa do evento embutido e botões de navegação direta via Google Maps e Waze para orientação dos convidados no dia da festa.
+- 🔐 **Painel do Organizador**: Área administrativa protegida por senha com hash criptográfico SHA-256 para consulta dos links de confirmação.
