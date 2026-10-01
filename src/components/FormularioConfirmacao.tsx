@@ -15,8 +15,6 @@ interface AcompanhanteState {
   eCrianca: boolean;
 }
 
-const DATA_LIMITE = new Date(2026, 8, 30, 23, 59, 59);
-
 const NOME_LOCAL = 'Espaço Beato';
 const ENDERECO_OFICIAL = 'Rua Cravinas, 11 - Jardim Alterosa 2ª seção - Betim/MG';
 const QUERY_MAPS = 'Espaço Beato, Rua Cravinas, 11, Jardim Alterosa 2a seção, Betim - MG';
@@ -49,10 +47,13 @@ export default function FormularioConfirmacao({ flor }: FormularioConfirmacaoPro
   const totalPessoas = 1 + acompanhantes.length;
   const vagasRestantes = flor.limiteMaximo - totalPessoas;
 
+  const dataLimite = flor.dataLimite || new Date(2026, 8, 30, 23, 59, 59);
+  const dataFormatadaStr = `${dataLimite.getDate().toString().padStart(2, '0')}/${(dataLimite.getMonth() + 1).toString().padStart(2, '0')}`;
+
   useEffect(() => {
     const calcularTempo = () => {
       const agora = new Date();
-      const diferenca = DATA_LIMITE.getTime() - agora.getTime();
+      const diferenca = dataLimite.getTime() - agora.getTime();
 
       if (diferenca <= 0) {
         setPrazoEncerrado(true);
@@ -69,7 +70,7 @@ export default function FormularioConfirmacao({ flor }: FormularioConfirmacaoPro
     calcularTempo();
     const interval = setInterval(calcularTempo, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [dataLimite]);
 
   useEffect(() => {
     const chaveSessao = `rsvp_confirmado_${flor.slug}`;
@@ -123,7 +124,7 @@ export default function FormularioConfirmacao({ flor }: FormularioConfirmacaoPro
     setErroMsg(null);
 
     if (prazoEncerrado) {
-      setErroMsg('O prazo de confirmação de presença se encerrou no dia 30/09 às 23:59.');
+      setErroMsg(`O prazo de confirmação de presença se encerrou no dia ${dataFormatadaStr} às 23:59.`);
       return;
     }
 
@@ -208,7 +209,7 @@ export default function FormularioConfirmacao({ flor }: FormularioConfirmacaoPro
           Confirmações Encerradas
         </h2>
         <p className="text-[#1b365d]/80 text-sm leading-relaxed mb-6 font-sans">
-          O prazo para confirmação de presença no aniversário de <strong>Nádia (50 Anos)</strong> se encerrou no dia <strong>30/09 às 23:59</strong>.
+          O prazo para confirmação de presença no aniversário de <strong>Nádia (50 Anos)</strong> se encerrou no dia <strong>{dataFormatadaStr} às 23:59</strong>.
         </p>
         <OrnamentoDivisorDourado />
         <div className="p-4 bg-[#f4f7fb] border border-[#cbd8eb] rounded-2xl text-xs text-[#1b365d]">
@@ -383,7 +384,7 @@ export default function FormularioConfirmacao({ flor }: FormularioConfirmacaoPro
         <div className="mb-5 p-3 bg-[#f7f3e8]/90 border border-[#e7d28d] rounded-2xl text-center shadow-2xs">
           <div className="flex items-center justify-center gap-1.5 text-xs text-[#755416] font-semibold mb-1">
             <Clock size={14} className="text-[#c5a059] animate-pulse" />
-            <span>Prazo limite para confirmar: 30/09 às 23:59</span>
+            <span>Prazo limite para confirmar: {dataFormatadaStr} às 23:59</span>
           </div>
           <div className="grid grid-cols-4 gap-1.5 sm:gap-2 text-center max-w-xs mx-auto mt-1.5">
             <div className="bg-white p-1.5 rounded-xl border border-[#e7d28d]">
