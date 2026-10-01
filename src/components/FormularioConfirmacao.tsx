@@ -74,7 +74,19 @@ export default function FormularioConfirmacao({ flor }: FormularioConfirmacaoPro
 
   useEffect(() => {
     const chaveSessao = `rsvp_confirmado_${flor.slug}`;
-    const salvo = localStorage.getItem(chaveSessao) || sessionStorage.getItem(chaveSessao);
+    let salvo = localStorage.getItem(chaveSessao) || sessionStorage.getItem(chaveSessao);
+
+    // Se nao encontrar com a chave especifica, procura qualquer confirmacao salva no aparelho
+    if (!salvo && typeof window !== 'undefined' && window.localStorage) {
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('rsvp_confirmado_')) {
+          salvo = localStorage.getItem(key);
+          break;
+        }
+      }
+    }
+
     if (salvo) {
       try {
         const dados = JSON.parse(salvo);
@@ -199,26 +211,7 @@ export default function FormularioConfirmacao({ flor }: FormularioConfirmacaoPro
     }
   };
 
-  if (prazoEncerrado) {
-    return (
-      <div className="bg-[#fdfbf7] rounded-3xl p-6 sm:p-10 shadow-2xl border-2 border-[#d4af37] text-center max-w-lg w-full relative z-20 my-4">
-        <div className="w-16 h-16 bg-[#f7f3e8] text-[#c5a059] border border-[#d4af37] rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
-          <Lock size={32} />
-        </div>
-        <h2 className="text-2xl font-serif font-bold text-[#1b365d] mb-2">
-          Confirmações Encerradas
-        </h2>
-        <p className="text-[#1b365d]/80 text-sm leading-relaxed mb-6 font-sans">
-          O prazo para confirmação de presença no aniversário de <strong>Nádia (50 Anos)</strong> se encerrou no dia <strong>{dataFormatadaStr} às 23:59</strong>.
-        </p>
-        <OrnamentoDivisorDourado />
-        <div className="p-4 bg-[#f4f7fb] border border-[#cbd8eb] rounded-2xl text-xs text-[#1b365d]">
-          Agradecemos de coração pelo carinho de todos os convidados!
-        </div>
-      </div>
-    );
-  }
-
+  // 1. TELA DE PRESENÇA CONFIRMADA (SEMPRE ACESSÍVEL PARA QUEM JÁ CONFIRMOU NO APARELHO)
   if (sucesso) {
     const adultosCount = 1 + acompanhantes.filter((a) => !a.eCrianca).length;
     const criancasCount = acompanhantes.filter((a) => a.eCrianca).length;
@@ -237,6 +230,14 @@ export default function FormularioConfirmacao({ flor }: FormularioConfirmacaoPro
         </h2>
 
         <OrnamentoDivisorDourado />
+
+        {/* Aviso informativo caso o prazo geral já tenha expirado */}
+        {prazoEncerrado && (
+          <div className="mb-4 p-3 bg-[#fdf7ed] border border-[#f5d9aa] rounded-2xl text-xs text-[#8c5311] font-medium flex items-center justify-center gap-2 font-sans shadow-2xs">
+            <Lock size={15} className="text-[#c5a059] shrink-0" />
+            <span>O prazo para novas confirmações encerrou, mas a sua presença está confirmada!</span>
+          </div>
+        )}
 
         <p className="text-[#1b365d] mb-4 text-sm sm:text-base font-sans leading-relaxed px-2">
           Muito obrigado, <strong className="text-[#1b365d] font-bold">{nomeConfirmante}</strong>! Sua presença está confirmada com carinho.
@@ -327,6 +328,28 @@ export default function FormularioConfirmacao({ flor }: FormularioConfirmacaoPro
     );
   }
 
+  // 2. TELA DE PRAZO ENCERRADO (EXIBIDA SOMENTE PARA QUEM NÃO CONFIRMOU A TEMPO)
+  if (prazoEncerrado) {
+    return (
+      <div className="bg-[#fdfbf7] rounded-3xl p-6 sm:p-10 shadow-2xl border-2 border-[#d4af37] text-center max-w-lg w-full relative z-20 my-4">
+        <div className="w-16 h-16 bg-[#f7f3e8] text-[#c5a059] border border-[#d4af37] rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+          <Lock size={32} />
+        </div>
+        <h2 className="text-2xl font-serif font-bold text-[#1b365d] mb-2">
+          Confirmações Encerradas
+        </h2>
+        <p className="text-[#1b365d]/80 text-sm leading-relaxed mb-6 font-sans">
+          O prazo para confirmação de presença no aniversário de <strong>Nádia (50 Anos)</strong> se encerrou no dia <strong>{dataFormatadaStr} às 23:59</strong>.
+        </p>
+        <OrnamentoDivisorDourado />
+        <div className="p-4 bg-[#f4f7fb] border border-[#cbd8eb] rounded-2xl text-xs text-[#1b365d]">
+          Agradecemos de coração pelo carinho de todos os convidados!
+        </div>
+      </div>
+    );
+  }
+
+  // 3. FORMULÁRIO NORMAL DE CONFIRMAÇÃO (QUANDO O PRAZO AINDA ESTÁ ABERTO E A PESSOA NÃO CONFIRMOU)
   return (
     <div className="bg-[#fdfbf7] rounded-3xl p-4 sm:p-8 shadow-2xl border-2 border-[#d4af37] max-w-xl w-full relative z-20 my-3 sm:my-6">
       <p className="text-center text-xs sm:text-sm text-[#1b365d]/85 font-serif italic mb-0.5">
