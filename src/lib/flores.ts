@@ -8,7 +8,7 @@ export interface FlorConfig {
 }
 
 const DATA_SETEMBRO = new Date(2026, 8, 30, 23, 59, 59); // 30/09/2026
-const DATA_OUTUBRO = new Date(2026, 9, 10, 23, 59, 59);  // 10/10/2026
+const DATA_OUTUBRO = new Date(2026, 9, 16, 23, 59, 59);  // 16/10/2026
 
 export const MAPA_FLORES: Record<string, FlorConfig> = {
   // LOTE 1 - Prazo: 30/09 às 23:59
@@ -53,13 +53,13 @@ export const MAPA_FLORES: Record<string, FlorConfig> = {
     dataLimite: DATA_SETEMBRO,
   },
 
-  // LOTE 2 - Prazo Estendido: 10/10 às 23:59
+  // LOTE 2 - Prazo Estendido: 16/10 às 23:59
   rosa: {
     slug: 'rosa',
     nome: 'Rosa',
     limiteMaximo: 1,
     descricao: 'Convite Individual (1 pessoa)',
-    lote: 'Lote 2 (Até 10/10)',
+    lote: 'Lote 2 (Até 16/10)',
     dataLimite: DATA_OUTUBRO,
   },
   violeta: {
@@ -67,7 +67,7 @@ export const MAPA_FLORES: Record<string, FlorConfig> = {
     nome: 'Violeta',
     limiteMaximo: 2,
     descricao: 'Convite para até 2 pessoas',
-    lote: 'Lote 2 (Até 10/10)',
+    lote: 'Lote 2 (Até 16/10)',
     dataLimite: DATA_OUTUBRO,
   },
   jasmim: {
@@ -75,7 +75,7 @@ export const MAPA_FLORES: Record<string, FlorConfig> = {
     nome: 'Jasmim',
     limiteMaximo: 3,
     descricao: 'Convite para até 3 pessoas',
-    lote: 'Lote 2 (Até 10/10)',
+    lote: 'Lote 2 (Até 16/10)',
     dataLimite: DATA_OUTUBRO,
   },
   hortensia: {
@@ -83,7 +83,7 @@ export const MAPA_FLORES: Record<string, FlorConfig> = {
     nome: 'Hortênsia',
     limiteMaximo: 4,
     descricao: 'Convite para até 4 pessoas',
-    lote: 'Lote 2 (Até 10/10)',
+    lote: 'Lote 2 (Até 16/10)',
     dataLimite: DATA_OUTUBRO,
   },
   camelia: {
@@ -91,7 +91,7 @@ export const MAPA_FLORES: Record<string, FlorConfig> = {
     nome: 'Camélia',
     limiteMaximo: 5,
     descricao: 'Convite para até 5 pessoas',
-    lote: 'Lote 2 (Até 10/10)',
+    lote: 'Lote 2 (Até 16/10)',
     dataLimite: DATA_OUTUBRO,
   },
 };

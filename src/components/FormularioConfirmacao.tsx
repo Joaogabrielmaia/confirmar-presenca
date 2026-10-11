@@ -47,7 +47,7 @@ export default function FormularioConfirmacao({ flor }: FormularioConfirmacaoPro
   const totalPessoas = 1 + acompanhantes.length;
   const vagasRestantes = flor.limiteMaximo - totalPessoas;
 
-  const dataLimite = flor.dataLimite || new Date(2026, 8, 30, 23, 59, 59);
+  const dataLimite = flor.dataLimite || new Date(2026, 9, 16, 23, 59, 59);
   const dataFormatadaStr = `${dataLimite.getDate().toString().padStart(2, '0')}/${(dataLimite.getMonth() + 1).toString().padStart(2, '0')}`;
 
   useEffect(() => {

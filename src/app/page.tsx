@@ -57,7 +57,7 @@ export default function HomePage() {
 
   const todasFlores = Object.values(MAPA_FLORES);
   const lote1 = todasFlores.filter((f) => f.lote.includes('30/09'));
-  const lote2 = todasFlores.filter((f) => f.lote.includes('10/10'));
+  const lote2 = todasFlores.filter((f) => f.lote.includes('16/10'));
 
   if (!autenticado) {
     return (
@@ -131,12 +131,12 @@ export default function HomePage() {
         Selecione abaixo um dos links de confirmação para copiar ou enviar aos convidados via WhatsApp:
       </p>
 
-      {/* SEÇÃO LOTE 2 - PRAZO ESTENDIDO ATÉ 10/10 */}
+      {/* SEÇÃO LOTE 2 - PRAZO ESTENDIDO ATÉ 16/10 */}
       <div className="mb-8 text-left">
         <div className="flex items-center gap-2 mb-3 pb-1 border-b border-[#cbd8eb]">
           <Calendar size={18} className="text-[#c5a059]" />
           <h2 className="text-sm font-bold text-[#1b365d] uppercase tracking-wider">
-            Convites com Prazo Estendido (Até 10/10 às 23:59)
+            Convites com Prazo Estendido (Até 16/10 às 23:59)
           </h2>
           <span className="ml-auto px-2.5 py-0.5 bg-[#eef5fc] text-[#1b365d] border border-[#8ca5c9] rounded-full text-[10px] font-bold">
             Novo Lote
@@ -162,7 +162,7 @@ export default function HomePage() {
                     </h3>
                     <p className="text-xs text-gray-500 font-medium">{flor.descricao}</p>
                     <span className="inline-block text-[10px] text-[#c5a059] font-bold mt-0.5">
-                      Prazo: 10/10 às 23:59
+                      Prazo: 16/10 às 23:59
                     </span>
                   </div>
                 </div>
@@ -216,7 +216,7 @@ export default function HomePage() {
         <ShieldCheck size={22} className="text-[#c5a059] shrink-0 mt-0.5" />
         <div>
           <strong className="block text-[#1b365d] text-sm mb-0.5 font-bold">Como enviar aos convidados:</strong>
-          Copie o link da flor desejada e envie no WhatsApp. Os convites do <strong>Novo Lote (Rosa, Violeta, Jasmim, Hortênsia, Camélia)</strong> possuem o prazo estendido até <strong>10/10 às 23:59</strong>.
+          Copie o link da flor desejada e envie no WhatsApp. Os convites do <strong>Novo Lote (Rosa, Violeta, Jasmim, Hortênsia, Camélia)</strong> possuem o prazo estendido até <strong>16/10 às 23:59</strong>.
         </div>
       </div>
     </div>
